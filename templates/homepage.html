@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-md-6 offset-md-3">
+
+{% if user.is_authenticated %}
+
+    <h1>
+Bienvenido al CRM de MTM
+    </h1>
+
+    {% else %}
+
+    <h3> Inicio de sesión en el CRM</h3>
+<form method='POST' action="{% url 'home' %}" >
+    {% csrf_token %}
+        <div class="mb-3">
+            <input type="text" class="form-control" name="username" placeholder="Nombre de Usuario" required>
+        </div>
+        <div class="mb-3">
+            <input type="password" required class="form-control" id="exampleInputPassword1" name="password" placeholder="Contraseña">
+        </div>
+        <button type="submit" class="btn btn-primary">Conectarse</button>
+        <button type="click" class="btn btn-primary"><a style="color: white; text-underline-style: none" href={% url 'register' %}>Registrarse</a></button>
+</form>
+</div>
+    {% endif %}
+    {% endblock content %}
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Página para registro</title>
+</head>
+{% extends 'base.html' %}
+{% block content %}
+<body>
+<h2>
+Registrate aquí para usar tu CRM
+</h2>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Tu formulario tiene errores
+                {% for field in forms %}
+                    {% if field.errors %}
+                        {{ field.errors }}
+                        {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+    </form>
+</body>
+{% endblock content %}
+</html>
