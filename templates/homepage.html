@@ -42,8 +42,11 @@ Bienvenido al CRM de MTM
             {% endif %}
     </table>
 
-    <button class="btn-dark btn">
+    <button class="btn btn-primary btn-danger">
         <a href="{% url 'add' %}">Agregar un registro de forma manual</a>
+    </button>
+    <button class="btn-primary btn btn-light">
+    <a href="{% url 'excel_upload' %}">Ir a carga de archivos Excel manuales</a>
     </button>
 
     {% else %}

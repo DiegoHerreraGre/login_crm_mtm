@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import CustomUserCreationForm, AddRecordForm
+from .forms import CustomUserCreationForm, AddRecordForm, UploadExcel
 from .models import Record
+import pandas as pd
 
 
 def homepage(request):
@@ -103,3 +104,30 @@ def edit_record(request, pk):
     else:
         messages.error(request, 'Debes iniciar sesión para editar registros')
         return redirect('home')
+
+
+def excel_upload(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = UploadExcel(request.POST, request.FILES)
+            if form.is_valid():
+                excel_file = request.FILES['excel_file']
+                data_frame = pd.read_excel(excel_file.read(), engine='openpyxl')
+                file = request.FILES['file']
+                for index, row in data_frame.iterrows():
+                    record = Record(
+                        first_name=row['First Name'],
+                        last_name=row['Last Name'],
+                        email=row['Email'],
+                        phone_number=row['Phone Number'],
+                        city=row['City'],
+                        state=row['State'],
+                        rut=row[('rut' or 'RUT')],
+                        user=request.user
+                    )
+                    record.save()
+                messages.success(request, 'Archivo cargado exitosamente')
+                return redirect('home')
+        else:
+            form = UploadExcel()
+    return render(request, 'excel_upload.html', {'form': form})
