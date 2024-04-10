@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Record
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -35,3 +36,18 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['password2'].label = ''
         self.fields[
             'password2'].help_text = '<span class="glyphicon glyphicon-lock">Debe intentar con una contraseña segura</span>'
+
+
+#Creating a Add Record form
+
+class AddRecordForm(forms.ModelForm):
+    first_name = forms.CharField(label='First Name', max_length=50, required=True, widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}))
+    last_name = forms.CharField(label='Last Name', max_length=50, required=True, widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}))
+    email = forms.EmailField(label='Email', max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder': 'Email', 'class': 'form-control'}))
+    phone_number = forms.CharField(label='Phone Number', max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder': 'Phone Number', 'class': 'form-control'}))
+    city = forms.CharField(label='City', max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}))
+    state = forms.CharField(label='State', max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}))
+
+    class Meta:
+        model = Record
+        exclude = ('user',)

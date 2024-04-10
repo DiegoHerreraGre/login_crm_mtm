@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Creando un registro de forma manual</title>
+</head>
+<body>
+    {% extends 'homepage.html' %}
+    {% block content %}
+
+        {% if user.is_authenticated %}
+
+            <form method="POST" action="{% url 'add' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Añadir Registro</button>
+            </form>
+
+            {% else %}
+
+            <strong>Debes estar iniciado para ver el contenido</strong>
+
+        {% endif %}
+
+    {% endblock content %}
+</body>
+</html>

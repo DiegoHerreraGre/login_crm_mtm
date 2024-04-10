@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editando usuarios del CRM</title>
+</head>
+<body>
+    {% extends 'homepage.html' %}
+    {% block content %}
+        {% if user.is_authenticated %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Editar registro</button>
+        </form>
+        {% else %}
+        <strong>Debes iniciar sesión para ver esta página</strong>
+        {% endif %}
+    {% endblock content %}
+</body>
+</html>

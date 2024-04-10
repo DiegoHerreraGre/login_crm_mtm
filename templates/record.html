@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Datos CRM</title>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+    <h2>
+    El detalle del registro es el siguiente:
+    </h2>
+
+    <div class="card text-center">
+        <div class="card-header">
+            {{ customer.id }}
+            {{ customer.email }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ customer.first_name }} {{ customer.last_name }}</h5>
+            <p class="card-text">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Creado el: {{ customer.created_at }}</strong></li>
+                    <li class="list-group-item">{{ customer.state }}</li>
+                    <li class="list-group-item">{{ customer.city }}</li>
+                </ul>
+            </p>
+            <a href="{% url 'home' %}" class="btn btn-primary btn-dark">Volver</a>
+            <a href="{% url 'edit' customer.id %}" class="btn btn-primary">Editar</a>
+            <a href="{% url 'delete' customer.id %}" class="btn btn-primary btn-danger">Borrar</a>
+        </div>
+        <div class="card-footer text-body-secondary">
+            <strong>Editado por última vez el:</strong>
+            {{ customer.updated_at }}
+        </div>
+    </div>
+
+
+
+
+
+{% endblock content %}
+</body>
+</html>

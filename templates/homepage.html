@@ -8,13 +8,43 @@
 <body>
 {% extends 'base.html' %}
 {% block content %}
-<div class="col-md-6 offset-md-3">
 
 {% if user.is_authenticated %}
 
     <h1>
 Bienvenido al CRM de MTM
     </h1>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th scope="col">Nombre completo</th>
+            <th scope="col">Ciudad</th>
+            <th scope="col">Región</th>
+            <th scope="col">Creado el:</th>
+            <th scope="col">Email</th>
+            <th scope="col">ID</th>
+        </tr>
+        </thead>
+            {% if records %}
+                {% for record in records %}
+                    <tr>
+                    <td>{{ record.first_name }}
+                    {{ record.last_name }}</td>
+                        <td>{{ record.city }}</td>
+                        <td>{{ record.state }}</td>
+                        <td>{{ record.created_at }}</td>
+                        <td>{{ record.email }}</td>
+                        <td><a href="{% url 'record' record.id %}">{{ record.id }}</a></td>
+                    <br/><br/>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+    </table>
+
+    <button class="btn-dark btn">
+        <a href="{% url 'add' %}">Agregar un registro de forma manual</a>
+    </button>
 
     {% else %}
 
@@ -30,7 +60,6 @@ Bienvenido al CRM de MTM
         <button type="submit" class="btn btn-primary">Conectarse</button>
         <button type="click" class="btn btn-primary"><a style="color: white; text-underline-style: none" href={% url 'register' %}>Registrarse</a></button>
 </form>
-</div>
     {% endif %}
     {% endblock content %}
 </body>
