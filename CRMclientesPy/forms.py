@@ -62,4 +62,7 @@ class AddRecordForm(forms.ModelForm):
 
 
 class UploadExcel(forms.Form):
-    excel_file = forms.FileField()
+    file = forms.FileField(label='Excel File', required=True)
+    exclude = ('user',)
+
+
