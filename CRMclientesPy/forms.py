@@ -54,7 +54,7 @@ class AddRecordForm(forms.ModelForm):
                            widget=forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}))
     state = forms.CharField(label='State', max_length=100, required=True,
                             widget=forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}))
-    rut = forms.IntegerField(label='RUT', max_value=20, required=True,)
+    rut = forms.IntegerField(label='RUT', max_value=20, required=True, )
 
     class Meta:
         model = Record
@@ -66,3 +66,9 @@ class UploadExcel(forms.Form):
     exclude = ('user',)
 
 
+class AvatarForm(forms.ModelForm):
+    avatar = forms.ImageField(label='Avatar', required=False, widget=forms.FileInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Record
+        fields = ('avatar',)

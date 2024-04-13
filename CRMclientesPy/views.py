@@ -1,14 +1,14 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
-from .forms import CustomUserCreationForm, AddRecordForm, UploadExcel
-from .models import Record
 import pandas as pd
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
+
+from .forms import CustomUserCreationForm, AddRecordForm, UploadExcel, AvatarForm
+from .models import Record
 
 
 def homepage(request):
     records = Record.objects.all()
-
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -131,3 +131,21 @@ def excel_upload(request):
         else:
             form = UploadExcel()
     return render(request, 'excel_upload.html', {'form': form})
+
+
+def avatar_upload(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = AvatarForm(request.POST, request.FILES)
+            if form.is_valid():
+                record = Record.objects.get(user=request.user)
+                record.avatar = form.cleaned_data.get('avatar')
+                record.save()
+                messages.success(request, 'Avatar actualizado exitosamente')
+                return redirect('home')
+        else:
+            form = AvatarForm()
+        return render(request, 'register.html', {'form': form})
+    else:
+        messages.error(request, 'Debes iniciar sesión para subir un avatar')
+        return redirect('home')
