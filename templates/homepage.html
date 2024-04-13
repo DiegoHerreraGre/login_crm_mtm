@@ -49,6 +49,18 @@ Bienvenido al CRM de MTM
     <a href="{% url 'excel_upload' %}">Ir a carga de archivos Excel manuales</a>
     </button>
 
+    <div class="card" style="width: 18rem;">
+        <img src="{{ user.record.avatar.url }}" class="card-img-top" alt="User Avatar">
+        <div class="card-body">
+            <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+            <p class="card-text">
+                Email: {{ user.email }}<br>
+                Ciudad: {{ user.record.city }}<br>
+                Región: {{ user.record.state }}
+            </p>
+        </div>
+    </div>
+
     {% else %}
 
     <h3> Inicio de sesión en el CRM</h3>
